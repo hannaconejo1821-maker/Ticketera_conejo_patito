@@ -1,0 +1,142 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>The Love Ritual 💜</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'cupones/css/styles.css' %}">
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- FLOATING ELEMENTS -->
+    <!-- ========================= -->
+    <img src="{% static 'cupones/images/bear.jpg' %}" class="floating bear-1" alt="osito">
+    <img src="{% static 'cupones/images/cat.jpg' %}" class="floating cat-1" alt="gatito">
+
+    <!-- ========================= -->
+    <!-- HERO -->
+    <!-- ========================= -->
+    <section class="hero">
+
+        <div class="hero-text">
+            <h1>
+                Bienvenido mi patito a tu
+                <span>Ticketera de Amor 💜</span>
+            </h1>
+
+            <p>
+                Un pequeño rincón mágico donde cada cupón guarda una experiencia especial para ti.
+            </p>
+
+            <button class="hero-btn">
+                Explorar Cupones ✨
+            </button>
+        </div>
+
+        <div class="hero-image-container">
+            <div class="glow"></div>
+            <img src="{% static 'cupones/images/us.jpg' %}" class="hero-image">
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- STATS -->
+    <!-- ========================= -->
+    <section class="stats-section">
+
+        <div class="stat-card">
+            <h2 id="days-counter"></h2>
+            <p>Días juntos 💕</p>
+        </div>
+
+        <!-- 💜 Risas compartidas (ARREGLADO) -->
+        <a href="{% url 'lista_recuerdos' %}" class="stat-link">
+            <div class="stat-card hoverable">
+                <h2>{{ recuerdos|length }}</h2>
+                <p>Risas compartidas 🌸</p>
+            </div>
+        </a>
+
+        <div class="stat-card">
+            <h2>∞</h2>
+            <p>Momentos por vivir ✨</p>
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- CUPONES -->
+    <!-- ========================= -->
+    <section class="coupons-section">
+
+        <h2 class="section-title">Cupones Especiales 💌</h2>
+
+        <div class="coupon-grid">
+
+            {% for cupon in cupones %}
+
+            <div class="coupon-card">
+
+                <img src="{% static 'cupones/images/' %}{{ cupon.imagen }}" class="coupon-image">
+
+                <h3>{{ cupon.titulo }}</h3>
+                <p>{{ cupon.descripcion }}</p>
+
+                {% if cupon.disponible %}
+                <a href="{% url 'canjear_cupon' cupon.id %}">
+                    <button class="redeem-btn">Canjear Cupón 💜</button>
+                </a>
+                {% else %}
+                <button class="redeem-btn used" disabled>Ya fue usado 💕</button>
+                {% endif %}
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    <!-- ========================= -->
+    <!-- FOOTER -->
+    <!-- ========================= -->
+    <footer class="footer">
+
+        <h2>Historial de Deseos ✨</h2>
+
+        {% for cupon in historial %}
+
+        <div class="history-card">
+            <p>💜 {{ cupon.titulo }}</p>
+            <small>Canjeado: {{ cupon.fecha_canje }}</small>
+        </div>
+
+        {% empty %}
+
+        <div class="history-card">
+            <p>Aún no has usado cupones ✨</p>
+        </div>
+
+        {% endfor %}
+
+    </footer>
+
+    <div id="hearts-container"></div>
+
+    <script src="{% static 'cupones/js/script.js' %}"></script>
+
+</body>
+
+</html>

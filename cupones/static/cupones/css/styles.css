@@ -1,0 +1,666 @@
+/* ==========================================================================
+   1. CONFIGURACIÓN GENERAL Y VARIABLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #F3E5F5;
+    overflow-x: hidden;
+    color: #4A148C;
+}
+
+/* ==========================================================================
+   2. SECCIÓN HERO (PORTADA)
+   ========================================================================== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 60px;
+    position: relative;
+}
+
+.hero-text {
+    max-width: 500px;
+}
+
+.hero-text h1 {
+    font-size: 4rem;
+    line-height: 1.2;
+    margin-bottom: 20px;
+}
+
+.hero-text span {
+    color: #7B1FA2;
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.hero-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    background: #7B1FA2;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.hero-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(123, 31, 162, 0.3);
+}
+
+.hero-image-container {
+    position: relative;
+}
+
+.hero-image {
+    width: 350px;
+    border-radius: 30px;
+    position: relative;
+    z-index: 2;
+    animation: float 4s ease-in-out infinite;
+}
+
+.glow {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    background: rgba(186, 104, 200, 0.3);
+    border-radius: 50%;
+    filter: blur(60px);
+}
+
+/* ==========================================================================
+   3. ANIMACIONES Y ELEMENTOS FLOTANTES
+   ========================================================================== */
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.floating {
+    position: absolute;
+    width: 120px;
+    z-index: 1;
+    animation: float 5s ease-in-out infinite;
+}
+
+.bear-1 {
+    top: 40px;
+    left: 20px;
+}
+
+.cat-1 {
+    bottom: 50px;
+    right: 20px;
+}
+
+/* ==========================================================================
+   4. ESTADÍSTICAS Y CONTADORES
+   ========================================================================== */
+.stats-section {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 80px 20px;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    text-align: center;
+    width: 250px;
+    box-shadow: 0 10px 30px rgba(123, 31, 162, 0.1);
+}
+
+.stat-card h2 {
+    font-size: 3rem;
+    color: #7B1FA2;
+}
+
+.stat-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.hoverable {
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.hoverable:hover {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   5. SECCIÓN DE CUPONES
+   ========================================================================== */
+.coupons-section {
+    padding: 80px 40px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 50px;
+}
+
+.coupon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.coupon-card {
+    background: white;
+    border-radius: 30px;
+    padding: 30px;
+    text-align: center;
+    transition: 0.4s;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(123, 31, 162, 0.1);
+}
+
+.coupon-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(123, 31, 162, 0.2);
+}
+
+.coupon-image {
+    width: 120px;
+    margin-bottom: 20px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.coupon-card h3 {
+    margin-bottom: 15px;
+}
+
+.coupon-card p {
+    margin-bottom: 25px;
+}
+
+.redeem-btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 40px;
+    background: #7B1FA2;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.redeem-btn:hover {
+    background: #9C27B0;
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   6. DIARIO / VISTAS DE RECUERDOS (NUEVO & DETALLE REFUERZOS)
+   ========================================================================== */
+.diary-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at top, #f3e5f5, #e1bee7, #ce93d8);
+    padding: 20px;
+}
+
+/* ☁️ Contenedor en forma de Nube Esponjosa */
+.diary-container {
+    width: 100%;
+    max-width: 520px;
+    background: rgba(255, 255, 255, 0.95);
+    /* Curvas irregulares que simulan una nube aesthetic */
+    border-radius: 40px 60px 40px 70px;
+    padding: 40px;
+    box-shadow: 0 20px 50px rgba(123, 31, 162, 0.25);
+    text-align: center;
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    animation: float 6s ease-in-out infinite;
+    /* Sutil movimiento de nube */
+}
+
+.diary-container h1 {
+    font-size: 2.4rem;
+    margin-bottom: 10px;
+    color: #4A148C;
+    font-weight: 700;
+}
+
+.diary-container p.subtitle {
+    color: #7B1FA2;
+    margin-bottom: 25px;
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Formulario con elementos apilados correctamente */
+.diary-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #4A148C;
+    font-size: 0.95rem;
+    padding-left: 5px;
+}
+
+.diary-form input[type="text"],
+.diary-form textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 15px;
+    border: 2px solid #E1BEE7;
+    background: #FAFAFA;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    color: #4A148C;
+    transition: 0.3s ease;
+}
+
+.diary-form input:focus,
+.diary-form textarea:focus {
+    border-color: #7B1FA2;
+    background: #FFFFFF;
+    outline: none;
+    box-shadow: 0 0 12px rgba(123, 31, 162, 0.2);
+}
+
+.diary-form textarea {
+    min-height: 140px;
+    resize: none;
+}
+
+/* File Input Customizer */
+.file-group {
+    background: #F3E5F5;
+    padding: 12px;
+    border-radius: 15px;
+    border: 2px dashed #B39DDB;
+    cursor: pointer;
+}
+
+/* Botón Guardar / Enviar */
+.btn-save {
+    margin-top: 10px;
+    padding: 15px;
+    border: none;
+    border-radius: 30px;
+    background: #7B1FA2;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 5px 15px rgba(123, 31, 162, 0.3);
+}
+
+.btn-save:hover {
+    background: #4A148C;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(74, 20, 140, 0.4);
+}
+
+/* Enlaces de retorno */
+.back-link {
+    display: inline-block;
+    margin-top: 25px;
+    color: #7B1FA2;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.back-link:hover {
+    color: #4A148C;
+    transform: translateX(-5px);
+}
+
+/* ==========================================================================
+   7. CLOUDS DE RECUERDOS (VISTA DE RECIENTES)
+   ========================================================================== */
+.cloud-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+    padding: 40px;
+    align-items: center;
+}
+
+.cloud-card {
+    width: 200px;
+    height: 150px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 30px;
+    box-shadow: 0 12px 30px rgba(123, 31, 162, 0.15);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    color: #4A148C;
+    font-weight: 600;
+    transition: 0.3s ease;
+    padding: 15px;
+}
+
+.cloud-card:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 25px 50px rgba(123, 31, 162, 0.25);
+}
+
+.cloud-card h3 {
+    font-size: 1.1rem;
+    color: #4A148C;
+    margin-top: 5px;
+}
+
+.cloud-card p {
+    font-size: 0.85rem;
+    color: #7B1FA2;
+    opacity: 0.9;
+}
+
+.cloud-img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #E1BEE7;
+}
+
+/* ==========================================================================
+   8. FOOTER Y CORAZONES
+   ========================================================================== */
+.footer {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: rise 4s linear forwards;
+}
+
+@keyframes rise {
+    to {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+/* ==========================================================================
+   9. MEDIA QUERIES (RESPONSIVE)
+   ========================================================================== */
+@media(max-width:900px) {
+    .hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-text h1 {
+        font-size: 3rem;
+    }
+
+    .hero-image {
+        width: 280px;
+        margin-top: 40px;
+    }
+
+    .diary-container {
+        padding: 25px;
+    }
+}
+
+/* ==========================================================================
+   DIARY PAGE & CENTERING (FIX PROFESIONAL)
+   ========================================================================== */
+
+.diary-page {
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    /* Centrado horizontal absoluto */
+    align-items: center;
+    /* Centrado vertical absoluto */
+    background: radial-gradient(circle at top, #f3e5f5, #e1bee7, #ce93d8);
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ☁️ La Tarjeta Contenedora Nube */
+.diary-container {
+    width: 100%;
+    max-width: 480px;
+    /* Tamaño ideal para que no se estire feo */
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 40px 55px 35px 60px;
+    /* Bordes irregulares estilo nube */
+    padding: 40px 35px;
+    box-shadow: 0 20px 45px rgba(123, 31, 162, 0.2);
+    text-align: center;
+    border: 4px solid rgba(255, 255, 255, 0.7);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.diary-header .cloud-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.diary-container h1 {
+    font-size: 2.2rem;
+    color: #4A148C;
+    /* Morado oscuro ultra legible */
+    font-weight: 700;
+    margin: 0;
+}
+
+.diary-container .subtitle {
+    color: #7B1FA2;
+    font-size: 0.95rem;
+    margin-top: 5px;
+    opacity: 0.85;
+}
+
+/* 📋 Formulario y Elementos en Bloque Vertical */
+.diary-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    /* Espacio uniforme entre campos */
+    width: 100%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    /* Obliga a la etiqueta y al input a ir uno abajo del otro */
+    text-align: left;
+    gap: 8px;
+    width: 100%;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #4A148C;
+    font-size: 0.95rem;
+    padding-left: 5px;
+}
+
+/* Estilos para Inputs Generados por Ti o por Django */
+.diary-form input[type="text"],
+.diary-form textarea,
+.diary-form input,
+.diary-form textarea {
+    display: block;
+    width: 100% !important;
+    /* Forzar ancho completo para romper el bug */
+    padding: 14px;
+    border-radius: 15px;
+    border: 2px solid #E1BEE7;
+    background: #FAFAFA;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #4A148C;
+    box-sizing: border-box;
+    transition: 0.3s ease;
+}
+
+.diary-form input:focus,
+.diary-form textarea:focus {
+    border-color: #7B1FA2;
+    background: #FFFFFF;
+    outline: none;
+    box-shadow: 0 0 10px rgba(123, 31, 162, 0.15);
+}
+
+.diary-form textarea {
+    min-height: 130px;
+    resize: none;
+}
+
+/* Customización del contenedor de archivos */
+.file-group {
+    background: #F3E5F5;
+    padding: 15px;
+    border-radius: 15px;
+    border: 2px dashed #B39DDB;
+}
+
+.file-group input[type="file"] {
+    background: transparent;
+    border: none;
+    padding: 5px 0 0 0;
+    color: #7B1FA2;
+}
+
+/* 💜 Botón Premium */
+.btn-save {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 30px;
+    background: #7B1FA2;
+    color: white;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 15px rgba(123, 31, 162, 0.25);
+    transition: 0.3s ease;
+}
+
+.btn-save:hover {
+    background: #4A148C;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(74, 20, 140, 0.35);
+}
+
+/* Enlace de regreso */
+.back-link {
+    color: #7B1FA2;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: 0.2s;
+    margin-top: 5px;
+}
+
+.back-link:hover {
+    color: #4A148C;
+    text-shadow: 0 0 2px rgba(123, 31, 162, 0.1);
+}
+
+/* ==========================================================================
+   SELECTOR DE FOTOS PROFESIONAL (MOBILE FRIENDLY)
+   ========================================================================== */
+.file-group {
+    background: #F3E5F5;
+    padding: 25px 15px;
+    border-radius: 20px;
+    border: 3px dashed #B39DDB;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Efecto cuando pasa el dedo o el mouse por encima */
+.file-group:hover {
+    background: #E1BEE7;
+    border-color: #7B1FA2;
+    transform: scale(1.02);
+}
+
+.file-group .upload-icon {
+    font-size: 2rem;
+}
+
+.file-group .upload-text {
+    font-weight: 600;
+    color: #4A148C;
+    font-size: 0.95rem;
+}
+
+/* Estilizamos el input de Django para que se adapte perfectamente */
+.django-file-input {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.django-file-input input[type="file"] {
+    width: 100%;
+    color: #7B1FA2;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+}

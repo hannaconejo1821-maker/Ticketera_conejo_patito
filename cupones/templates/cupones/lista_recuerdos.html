@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risas Compartidas ☁️</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'cupones/css/styles.css' %}">
+
+    <style>
+        .cloud-header {
+            text-align: center;
+            padding: 50px 20px 10px 20px;
+            color: #4A148C;
+        }
+
+        .cloud-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .back-home-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: #7B1FA2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .back-home-link:hover {
+            color: #4A148C;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="cloud-header">
+        <h1>☁️ Risas Compartidas</h1>
+
+        <a href="{% url 'crear_recuerdo' %}" class="btn-save"
+            style="display: inline-block; margin-top: 20px; text-decoration: none; width: auto; padding: 12px 35px;">
+            + Escribir nuevo recuerdo 💜
+        </a>
+        <br>
+        <a href="{% url 'index' %}" class="back-home-link">← Ir a la Ticketera Principal</a>
+    </div>
+
+    <div class="cloud-container">
+
+        {% for r in recuerdos %}
+
+        <a href="{% url 'detalle_recuerdo' r.id %}" class="cloud-card">
+
+            {% if r.imagen %}
+            <img src="{{ r.imagen.url }}" class="cloud-img">
+            {% endif %}
+
+            <h3>{{ r.titulo }}</h3>
+            <p>Ver momento ✨</p>
+
+        </a>
+
+        {% empty %}
+
+        <div class="diary-container" style="margin: 0 auto; animation: none; max-width: 400px;">
+            <p style="font-size: 1.1rem; font-weight: 600; color: #7B1FA2; margin: 0;">
+                Aún no tenemos recuerdos guardados aquí dentro... 💜
+            </p>
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</body>
+
+</html>

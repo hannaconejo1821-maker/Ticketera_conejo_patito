@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Recuerdo 💜</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'cupones/css/styles.css' %}">
+</head>
+
+<body>
+
+    <div class="diary-page">
+        <div class="diary-container">
+
+            <div class="diary-header">
+                <span class="cloud-icon">☁️</span>
+                <h1>Nuevo Recuerdo</h1>
+                <p class="subtitle">Guarda un pedacito de nuestra historia 💕</p>
+            </div>
+
+            <form class="diary-form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="id_titulo">✨ Título del momento</label>
+                    {{ form.titulo }}
+                </div>
+
+                <div class="form-group">
+                    <label for="id_descripcion">📝 ¿Qué pasó hoy?</label>
+                    {{ form.descripcion }}
+                </div>
+
+                <div class="form-group file-group">
+                    <label>📸 Nuestra Foto (Opcional)</label>
+
+                    <label for="foto_celular" class="file-group">
+                        <span class="upload-icon">✨</span>
+                        <span class="upload-text">Toca aquí para abrir tu galería</span>
+
+                        <input type="file" name="imagen" accept="image/*" id="foto_celular" style="display: none;"
+                            onchange="updateFileName(this)">
+
+                        <span id="file-name"
+                            style="font-size: 0.85rem; color: #7B1FA2; font-weight: 500; margin-top: 5px;"></span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-save">
+                    Guardar en el corazón ✨
+                </button>
+            </form>
+
+            <a href="{% url 'lista_recuerdos' %}" class="back-link">← Volver a las nubes</a>
+
+        </div>
+    </div>
+
+
+    <script>
+        function updateFileName(input) {
+            const fileNameSpan = document.getElementById('file-name');
+            if (input.files && input.files.length > 0) {
+                fileNameSpan.innerText = "📸 Foto seleccionada: " + input.files[0].name;
+            } else {
+                fileNameSpan.innerText = "";
+            }
+        }
+    </script>
+</body>
+
+</html>
