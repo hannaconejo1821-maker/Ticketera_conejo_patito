@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-=^=odab##^$%u^4)ui(t%tvvo(6$l&%tq&a!ghs%nq!9!rb(u(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ticketera-conejo-patito.onrender.com', 'localhost', '127.0.0.1', '*']
 
 
 # Application definition
