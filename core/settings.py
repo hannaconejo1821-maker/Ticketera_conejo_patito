@@ -39,7 +39,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitespace.middleware.WhiteNoiseMiddleware', # Ayuda a Render a servir CSS/JS gratis
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- Asegúrate de que diga whitenoise aquí
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -68,16 +68,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-# Database Configuration (Arreglado para compatibilidad con IPv4 de Render)
+# Database Configuration (Conexión directa vía Pooler IPv4 para evitar "Network is unreachable")
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 if os.environ.get('DATABASE_URL'):
-    # Si estamos en Render, lee la variable de entorno automáticamente
+    # Si Render tiene la variable global configurada, la usa de forma automática
     DATABASES = {
         'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
 else:
-    # Configuración manual de respaldo usando el Pooler IPv4 Seguro (Puerto 6543)
+    # Respaldo explícito usando la URL del Pooler de Supabase (Puerto 6543)
     DATABASES = { 
         'default': { 
             'ENGINE': 'django.db.backends.postgresql', 
@@ -127,7 +127,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Almacenamiento optimizado para producción en Render
+# Compresión y almacenamiento óptimo de estilos/scripts en producción
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
