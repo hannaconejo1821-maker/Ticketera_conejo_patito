@@ -7,9 +7,10 @@ from supabase import create_client, Client
 from .models import Cupon, Recuerdo
 from .forms import RecuerdoForm
 
-# Aquí están tus llaves de conexión a Supabase ✨
+# Configuración de Supabase
 SUPABASE_URL = "https://obvktqnikkqelwwfziqi.supabase.co" 
-SUPABASE_KEY = "sb_publishable_hr77xjMbgfuMCbThrMmuAg_FTyHE4ej"
+# REEMPLAZA ESTO por tu clave 'service_role' de Supabase (empieza por eyJ...)
+SUPABASE_KEY = "sb_publishable_hr77xjMbgfuMCbThrMmuAg_FTyHE4ej" 
 
 def index(request):
     cupones = Cupon.objects.filter(disponible=True)
@@ -35,37 +36,30 @@ def crear_recuerdo(request):
         form = RecuerdoForm(request.POST, request.FILES)
         
         if form.is_valid():
-            # Esperamos antes de guardar
             recuerdo = form.save(commit=False)
-            
-            # Obtenemos la foto
             foto_fisica = request.FILES.get('imagen')
 
             if foto_fisica:
-                # 1. Nos conectamos a Supabase
+                # 1. Nos conectamos con la llave de superpoderes
                 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
                 # 2. Creamos nombre único
                 extension = foto_fisica.name.split('.')[-1]
                 nombre_unico = f"foto_{uuid.uuid4()}.{extension}"
 
-                # 3. Leemos la foto
-                foto_bytes = foto_fisica.read()
-
-                # 4. ¡La subimos al Bucket "fotos"!
+                # 3. Subimos al bucket "fotos"
                 supabase.storage.from_("fotos").upload(
-                    file=foto_bytes,
+                    file=foto_fisica.read(),
                     path=nombre_unico,
                     file_options={"content-type": foto_fisica.content_type}
                 )
 
-                # 5. Pedimos el link público de la cajita "fotos"
-                url_magica = supabase.storage.from_("fotos").get_public_url(nombre_unico)
-
-                # 6. Guardamos el enlace en Django
+                # 4. Construimos la URL pública manualmente para mayor seguridad
+                url_magica = f"{SUPABASE_URL}/storage/v1/object/public/fotos/{nombre_unico}"
+                
+                # 5. Guardamos el enlace completo en Django
                 recuerdo.imagen = url_magica
 
-            # ¡Ahora sí, guardamos en la base de datos!
             recuerdo.save()
             return redirect('lista_recuerdos')
     else:
@@ -88,3 +82,4 @@ def detalle_recuerdo(request, id):
     return render(request, 'cupones/detalle_recuerdo.html', {
         'recuerdo': recuerdo
     })
+
