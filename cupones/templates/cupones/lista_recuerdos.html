@@ -58,7 +58,7 @@
         <a href="{% url 'detalle_recuerdo' r.id %}" class="cloud-card">
 
             {% if r.imagen %}
-            <img src="{{ r.imagen.url }}" class="cloud-img">
+            <img src="{{ r.imagen }}" class="cloud-img">
             {% endif %}
 
             <h3>{{ r.titulo }}</h3>
