@@ -696,27 +696,28 @@ body {
     z-index: 10;
 }
 
-/* 📱 ¡LA MAGIA PARA CELULARES! */
+/* 📱 Arreglo definitivo para celulares */
 @media (max-width: 768px) {
 
-    /* Le damos espacio extra al texto arriba y abajo para que el oso y el gato no lo tapen */
-    .hero-container h1,
-    .header-seccion h1 {
-        padding: 40px 15px !important;
-        font-size: 1.8rem !important;
-        /* Achicamos un pelín la letra para que quepa bien */
+    /* Buscamos tu título principal y lo empujamos hacia abajo */
+    h1,
+    .bienvenido-titulo,
+    [class*="titulo"] {
+        margin-top: 110px !important;
+        /* Esto hace que las letras bajen y dejen libre al osito */
+        padding-left: 10px !important;
+        padding-right: 10px !important;
     }
 
-    .osito-decoracion {
-        width: 55px;
-        /* Más chiquito en celular */
-        top: 5px;
-        left: 5px;
-    }
-
-    .gatito-decoracion {
-        width: 55px;
-        bottom: 5px;
-        right: 5px;
+    /* Aseguramos que el osito se quede fijo arriba a la izquierda sin moverse */
+    .osito-decoracion,
+    [src*="oso"],
+    [class*="oso"] {
+        position: absolute !important;
+        top: 10px !important;
+        left: 10px !important;
+        width: 80px !important;
+        /* Tamaño perfecto para que no use toda la pantalla */
+        height: auto !important;
     }
 }
