@@ -4,8 +4,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # <--- ¡Asegúrate de que diga .urls aquí!
+    path('admin/', admin.site.urls),  # <--- YA DICE .urls AQUÍ, ADIÓS SPLIT
     path('', include('cupones.urls')),
 ]
 
+# Esto sirve para que se vean las fotos que subas
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
