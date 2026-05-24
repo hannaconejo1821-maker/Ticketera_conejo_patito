@@ -39,7 +39,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # <--- Asegúrate de que diga whitenoise aquí
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Maneja los estáticos en Render
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -77,14 +77,14 @@ if os.environ.get('DATABASE_URL'):
         'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
     }
 else:
-    # Respaldo explícito usando la URL del Pooler de Supabase (Puerto 6543)
+    # Respaldo explícito usando la URL del Pooler REAL de tu Supabase (Puerto 6543)
     DATABASES = { 
         'default': { 
             'ENGINE': 'django.db.backends.postgresql', 
             'NAME': 'postgres', 
-            'USER': 'postgres', 
+            'USER': 'postgres.obvktqnikkqelwwfziqi', 
             'PASSWORD': 'patito1892lanzhan', 
-            'HOST': 'db.obvktqnikkqelwwfziqi.pooler.supabase.com', 
+            'HOST': 'aws-1-us-east-1.pooler.supabase.com', 
             'PORT': '6543', 
         } 
     }
@@ -130,5 +130,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Compresión y almacenamiento óptimo de estilos/scripts en producción
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Manejo de imágenes en la app
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
