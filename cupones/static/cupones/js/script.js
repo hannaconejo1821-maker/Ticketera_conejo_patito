@@ -68,6 +68,7 @@ function createHeart() {
 
 /* Corazones automáticos */
 setInterval(createHeart, 700);
+
 /* ========================= */
 /* BOTONES DE CUPONES */
 /* ========================= */
@@ -76,17 +77,13 @@ const buttons = document.querySelectorAll(".redeem-btn");
 
 buttons.forEach(button => {
 
-    // 1. Agregamos la palabra 'event' aquí adentro
     button.addEventListener("click", (event) => {
 
-        // 2. Bloqueamos la recarga automática de la página
-        event.preventDefault();
-
-        // Preguntamos si está seguro
+        // 1. Preguntamos primero (sin frenar nada todavía)
         const confirmacion = confirm("¿Estás seguro de que deseas canjear este cupón?");
 
-        // Si la respuesta es "Aceptar" (true), ejecutamos el canje
         if (confirmacion) {
+            // SI CORRE EL CANJE:
             button.innerText = "Ya fue canjeado 💕";
             button.style.background = "#BDBDBD";
             button.disabled = true;
@@ -95,6 +92,14 @@ buttons.forEach(button => {
             for (let i = 0; i < 15; i++) {
                 createHeart();
             }
+
+            // NO ponemos preventDefault aquí. 
+            // El navegador continuará y mandará los datos a Supabase de forma nativa.
+
+        } else {
+            // SI CANCELA:
+            // Aquí sí frenamos el envío a Supabase y evitamos que se recargue la página.
+            event.preventDefault();
         }
 
     });
