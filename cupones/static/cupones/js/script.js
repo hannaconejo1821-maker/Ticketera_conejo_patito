@@ -68,7 +68,6 @@ function createHeart() {
 
 /* Corazones automáticos */
 setInterval(createHeart, 700);
-
 /* ========================= */
 /* BOTONES DE CUPONES */
 /* ========================= */
@@ -77,7 +76,11 @@ const buttons = document.querySelectorAll(".redeem-btn");
 
 buttons.forEach(button => {
 
-    button.addEventListener("click", () => {
+    // 1. Agregamos la palabra 'event' aquí adentro
+    button.addEventListener("click", (event) => {
+
+        // 2. Bloqueamos la recarga automática de la página
+        event.preventDefault();
 
         // Preguntamos si está seguro
         const confirmacion = confirm("¿Estás seguro de que deseas canjear este cupón?");
