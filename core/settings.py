@@ -133,3 +133,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Manejo de imágenes en la app
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Al loguearse, va directo a la página principal
+LOGIN_REDIRECT_URL = '/'
+# Si intenta entrar a una ruta protegida sin loguearse, lo manda aquí
+LOGIN_URL = '/accounts/login/'

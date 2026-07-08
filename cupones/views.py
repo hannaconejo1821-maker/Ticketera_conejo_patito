@@ -2,6 +2,7 @@ import os
 import uuid 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required # 🔑 ¡El candado de Django!
 from supabase import create_client, Client
 
 from .models import Cupon, Recuerdo
@@ -9,12 +10,13 @@ from .forms import RecuerdoForm
 
 # Configuración de Supabase
 SUPABASE_URL = "https://obvktqnikkqelwwfziqi.supabase.co" 
-# REEMPLAZA ESTO por tu clave 'service_role' de Supabase (empieza por eyJ...)
 SUPABASE_KEY = "sb_publishable_hr77xjMbgfuMCbThrMmuAg_FTyHE4ej" 
 
+@login_required # 🔒 Obliga a loguearse para ver la app
 def index(request):
     cupones = Cupon.objects.filter(disponible=True)
-    historial = Cupon.objects.filter(disponible=False)
+    # 🎟️ ¡Ordenados por fecha de canje! (El menos '-' hace que el más reciente salga primero)
+    historial = Cupon.objects.filter(disponible=False).order_by('-fecha_canje')
     recuerdos = Recuerdo.objects.all().order_by('-fecha')
 
     return render(request, 'cupones/index.html', {
@@ -23,6 +25,7 @@ def index(request):
         'recuerdos': recuerdos
     })
 
+@login_required
 def canjear_cupon(request, cupon_id):
     cupon = get_object_or_404(Cupon, id=cupon_id)
     cupon.disponible = False
@@ -31,6 +34,7 @@ def canjear_cupon(request, cupon_id):
 
     return redirect('index')
 
+@login_required
 def crear_recuerdo(request):
     if request.method == 'POST':
         form = RecuerdoForm(request.POST, request.FILES)
@@ -40,24 +44,17 @@ def crear_recuerdo(request):
             foto_fisica = request.FILES.get('imagen')
 
             if foto_fisica:
-                # 1. Nos conectamos con la llave de superpoderes
                 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-
-                # 2. Creamos nombre único
                 extension = foto_fisica.name.split('.')[-1]
                 nombre_unico = f"foto_{uuid.uuid4()}.{extension}"
 
-                # 3. Subimos al bucket "fotos"
                 supabase.storage.from_("fotos").upload(
                     file=foto_fisica.read(),
                     path=nombre_unico,
                     file_options={"content-type": foto_fisica.content_type}
                 )
 
-                # 4. Construimos la URL pública manualmente para mayor seguridad
                 url_magica = f"{SUPABASE_URL}/storage/v1/object/public/fotos/{nombre_unico}"
-                
-                # 5. Guardamos el enlace completo en Django
                 recuerdo.imagen = url_magica
 
             recuerdo.save()
@@ -69,17 +66,16 @@ def crear_recuerdo(request):
         'form': form
     })
 
+@login_required
 def lista_recuerdos(request):
     recuerdos = Recuerdo.objects.all().order_by('-fecha')
-
     return render(request, 'cupones/lista_recuerdos.html', {
         'recuerdos': recuerdos
     })
 
+@login_required
 def detalle_recuerdo(request, id):
-    recuerdo = get_object_or_404(Recuerdo, id=id)
-
+    get_object_or_404(Recuerdo, id=id)
     return render(request, 'cupones/detalle_recuerdo.html', {
         'recuerdo': recuerdo
     })
-

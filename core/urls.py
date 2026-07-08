@@ -4,7 +4,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),  # <--- YA DICE .urls AQUÍ, ADIÓS SPLIT
+    path('admin/', admin.site.urls),  
+    
+    # 🔑 ¡Añadimos esta línea! Activa /accounts/login/ y /accounts/logout/
+    path('accounts/', include('django.contrib.auth.urls')), 
+    
     path('', include('cupones.urls')),
 ]
 

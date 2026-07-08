@@ -13,19 +13,77 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="{% static 'cupones/css/styles.css' %}">
+
+    <style>
+        .historial-container {
+            margin: 40px auto;
+            max-width: 800px;
+            background-color: #f4f2f9;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .historial-title {
+            color: #5a32a3;
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .historial-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .historial-card {
+            background-color: white;
+            border-left: 6px solid #6f42c1;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .historial-card:hover {
+            transform: translateX(8px);
+        }
+
+        .historial-icon {
+            font-size: 28px;
+        }
+
+        .historial-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .historial-info h3 {
+            margin: 0;
+            color: #333;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .historial-info p {
+            margin: 5px 0 0;
+            color: #888;
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- ========================= -->
-    <!-- FLOATING ELEMENTS -->
-    <!-- ========================= -->
     <img src="{% static 'cupones/images/bear.jpg' %}" class="floating bear-1" alt="osito">
     <img src="{% static 'cupones/images/cat.jpg' %}" class="floating cat-1" alt="gatito">
 
-    <!-- ========================= -->
-    <!-- HERO -->
-    <!-- ========================= -->
     <section class="hero">
 
         <div class="hero-text">
@@ -50,9 +108,6 @@
 
     </section>
 
-    <!-- ========================= -->
-    <!-- STATS -->
-    <!-- ========================= -->
     <section class="stats-section">
 
         <div class="stat-card">
@@ -60,7 +115,6 @@
             <p>Días juntos 💕</p>
         </div>
 
-        <!-- 💜 Risas compartidas (ARREGLADO) -->
         <a href="{% url 'lista_recuerdos' %}" class="stat-link">
             <div class="stat-card hoverable">
                 <h2>{{ recuerdos|length }}</h2>
@@ -75,9 +129,6 @@
 
     </section>
 
-    <!-- ========================= -->
-    <!-- CUPONES -->
-    <!-- ========================= -->
     <section class="coupons-section">
 
         <h2 class="section-title">Cupones Especiales 💌</h2>
@@ -109,28 +160,30 @@
 
     </section>
 
-    <!-- ========================= -->
-    <!-- FOOTER -->
-    <!-- ========================= -->
     <footer class="footer">
+        <div class="historial-container">
+            <h2 class="historial-title">Historial de Deseos ✨</h2>
 
-        <h2>Historial de Deseos ✨</h2>
-
-        {% for cupon in historial %}
-
-        <div class="history-card">
-            <p>💜 {{ cupon.titulo }}</p>
-            <small>Canjeado: {{ cupon.fecha_canje }}</small>
+            <div class="historial-grid">
+                {% for cupon in historial %}
+                <div class="historial-card">
+                    <div class="historial-icon">💜</div>
+                    <div class="historial-info">
+                        <h3>{{ cupon.titulo }}</h3>
+                        <p>Canjeado el: {{ cupon.fecha_canje|date:"d \d\e F, Y - h:i A" }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="historial-card" style="border-left-color: #ccc;">
+                    <div class="historial-icon">📭</div>
+                    <div class="historial-info">
+                        <h3>No hay deseos canjeados aún</h3>
+                        <p>¡Usa un cupón para empezar la magia!</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-
-        {% empty %}
-
-        <div class="history-card">
-            <p>Aún no has usado cupones ✨</p>
-        </div>
-
-        {% endfor %}
-
     </footer>
 
     <div id="hearts-container"></div>
