@@ -4,13 +4,17 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required # 🔑 ¡El candado de Django!
 from supabase import create_client, Client
+from dotenv import load_dotenv # 👈 Importamos la librería para el archivo .env
 
 from .models import Cupon, Recuerdo
 from .forms import RecuerdoForm
 
-# Configuración de Supabase
-SUPABASE_URL = "https://obvktqnikkqelwwfziqi.supabase.co" 
-SUPABASE_KEY = "sb_publishable_hr77xjMbgfuMCbThrMmuAg_FTyHE4ej" 
+# 👈 Le decimos a Python que cargue los secretos del archivo .env local
+load_dotenv() 
+
+# Configuración segura de Supabase (¡Ya no están en texto plano!)
+SUPABASE_URL = os.environ.get("SUPABASE_URL") 
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
 
 @login_required # 🔒 Obliga a loguearse para ver la app
 def index(request):
@@ -75,7 +79,9 @@ def lista_recuerdos(request):
 
 @login_required
 def detalle_recuerdo(request, id):
-    get_object_or_404(Recuerdo, id=id)
+    # 👇 ¡Aquí está el arreglo del error NameError que tenías antes!
+    recuerdo = get_object_or_404(Recuerdo, id=id) 
+    
     return render(request, 'cupones/detalle_recuerdo.html', {
         'recuerdo': recuerdo
     })
